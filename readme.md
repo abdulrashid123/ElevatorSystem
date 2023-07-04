@@ -4,7 +4,7 @@
     and displaying the current status. The system also assigns the most optimal elevator to 
     user requests based on a list of requests.
 
-##`Design Decisions`
+## `Design Decisions`
 
     The project is built using Django and Django REST Framework (DRF) to provide a robust and scalable solution for the elevator system.
     The elevator system is represented by the Elevator model, which stores information about each elevator's availability, operational status, current floor, and destination floor.
@@ -14,11 +14,11 @@
     The API endpoints follow RESTful conventions and provide clear and concise responses.Postgres is used as DB for better and realtime performance
 
 
-##`API Contracts`
+## `API Contracts`
 
     The API contracts for the elevator system are as follows:
 
-1. ###`System Api`:
+1. ### `System Api`:
        - POST /system/: Create a new System
          required fields:[name]
          
@@ -62,7 +62,7 @@
       
         
 
-##`Setup, Deploy, and Test`
+## `Setup, Deploy, and Test`
     
     To set up, deploy, and test the elevator system, follow these steps:
 
@@ -75,7 +75,7 @@
     Start the development server: python manage.py runserver
     Access the API endpoints using a tool like cURL, Postman, or any HTTP client.
 
-##`Additional Notes`
+## `Additional Notes`
     If using PostgreSQL as the database, ensure that the necessary configurations are added to
     settings.py and the PostgreSQL database is set up and accessible.
     
