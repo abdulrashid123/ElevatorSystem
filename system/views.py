@@ -4,7 +4,8 @@ from system.models import *
 from system.serializers import *
 from rest_framework import status
 from django.db import transaction
-from django.db.models import Min, F,Func
+from django.db.models import  F,Func
+from rest_framework.exceptions import MethodNotAllowed
 # Create your views here.
 
 
@@ -46,6 +47,10 @@ class SystemViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+    def destroy(self, request, *args, **kwargs):
+        # Raise an exception or return a response indicating DELETE is not allowed
+        raise MethodNotAllowed("DELETE")
+
 class ElevatorViewSet(viewsets.ModelViewSet):
     queryset = Elevator.objects.all()
     serializer_class = ElevatorSerializer
@@ -63,6 +68,7 @@ class ElevatorViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.get_serializer(obj)
             return Response(serializer.data,status=status.HTTP_200_OK)
+
     def list(self, request, *args, **kwargs):
         stat = request.query_params.get('status')
         system = request.query_params.get('system')
@@ -98,8 +104,18 @@ class ElevatorViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def destroy(self, request, *args, **kwargs):
+        # Raise an exception or return a response indicating DELETE is not allowed
+        raise MethodNotAllowed("DELETE")
+
 
 class FloorRequestViewSet(viewsets.ModelViewSet):
+
+    def list(self, request, *args, **kwargs):
+        raise MethodNotAllowed("GET")
+
+    def retrieve(self, request, *args, **kwargs):
+        raise MethodNotAllowed("GET")
 
     def create(self, request, *args, **kwargs):
         serializer = FloorRequestSerializer(data=request.data)
@@ -111,3 +127,7 @@ class FloorRequestViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        # Raise an exception or return a response indicating DELETE is not allowed
+        raise MethodNotAllowed("DELETE")
