@@ -8,6 +8,11 @@ from django.db.models import  F,Func
 from rest_framework.exceptions import MethodNotAllowed
 # Create your views here.
 
+# Function to assign access to elevator to requests
+# FIFO is used to give access to elevator
+# If elevator is busy when it becomes idle request is fulfilled
+# elevator nearest to floor is assigned
+
 
 @transaction.atomic
 def assign_elevator(system):
@@ -111,6 +116,7 @@ class ElevatorViewSet(viewsets.ModelViewSet):
 
 class FloorRequestViewSet(viewsets.ModelViewSet):
 
+    serializer_class = FloorRequestSerializer
     def list(self, request, *args, **kwargs):
         raise MethodNotAllowed("GET")
 
@@ -118,7 +124,7 @@ class FloorRequestViewSet(viewsets.ModelViewSet):
         raise MethodNotAllowed("GET")
 
     def create(self, request, *args, **kwargs):
-        serializer = FloorRequestSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         valid = serializer.is_valid()
         if valid:
             serializer.save()
